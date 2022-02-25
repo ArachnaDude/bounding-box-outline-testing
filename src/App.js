@@ -3,17 +3,22 @@ import "./App.css";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import geoJsonData from "./data/manchesterSmallData.json";
 import Clusters from "./Cluster";
+import CustomModal from "./CustomModal";
 
 function App() {
   const onEachNode = (node, layer) => {
-    // console.log(node.properties);
     const nodeName = node.properties.name;
 
     layer.bindPopup((nodeName || "Not found") + " ");
   };
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+
+  console.log(show);
+
   return (
-    <div>
+    <>
       <MapContainer
         className='leaflet-container'
         center={[53.483959, -2.244644]}
@@ -23,10 +28,11 @@ function App() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
-        <GeoJSON data={geoJsonData.features} onEachFeature={onEachNode} />
-        <Clusters />
+        {/* <GeoJSON data={geoJsonData.features} onEachFeature={onEachNode} /> */}
+        <Clusters setShow={setShow} data={geoJsonData.features} />
       </MapContainer>
-    </div>
+      <CustomModal show={show} onClose={handleClose} />
+    </>
   );
 }
 
