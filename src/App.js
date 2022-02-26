@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, Marker, Popup } from "react-leaflet";
 import geoJsonData from "./data/manchesterSmallData.json";
-import Clusters from "./Cluster";
-import CustomModal from "./CustomModal";
+import NewCluster from "./NewCluster";
 
 function App() {
   const onEachNode = (node, layer) => {
@@ -11,11 +11,6 @@ function App() {
 
     layer.bindPopup((nodeName || "Not found") + " ");
   };
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-
-  console.log(show);
 
   return (
     <>
@@ -29,9 +24,9 @@ function App() {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         {/* <GeoJSON data={geoJsonData.features} onEachFeature={onEachNode} /> */}
-        <Clusters setShow={setShow} data={geoJsonData.features} />
+        {/* <Clusters setShow={setShow} data={geoJsonData.features} /> */}
+        <NewCluster data={geoJsonData.features} />
       </MapContainer>
-      <CustomModal show={show} onClose={handleClose} />
     </>
   );
 }

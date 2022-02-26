@@ -48,22 +48,18 @@ const Cluster = ({ data, setShow }) => {
     };
   }, [map, onMove]);
 
-  const points = data.map((crime) => {
-    const coordinatesArr = () => {};
-
-    return {
-      type: "Feature",
-      properties: {
-        cluster: false,
-        crimeId: crime.id,
-        category: crime.category,
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [...crime.geometry.coordinates],
-      },
-    };
-  });
+  const points = data.map((crime) => ({
+    type: "Feature",
+    properties: {
+      cluster: false,
+      crimeId: crime.id,
+      category: crime.category,
+    },
+    geometry: {
+      type: "Point",
+      coordinates: [...crime.geometry.coordinates],
+    },
+  }));
 
   const { clusters, supercluster } = useSupercluster({
     points: points,
