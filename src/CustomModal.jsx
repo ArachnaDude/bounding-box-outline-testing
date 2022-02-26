@@ -1,63 +1,97 @@
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import ModalBody from "react-bootstrap/ModalBody";
 import ModalFooter from "react-bootstrap/ModalFooter";
 import Button from "react-bootstrap/Button";
+import moment from "moment";
+import {getVenueInfoById} from "./utils.js/be-api.js";
+import CreateNewComment from "./components/CreateNewComment.js";
 
 const CustomModal = ({ show, onClose }) => {
-  return (
+const [venueItems, setVenueItems] = useState();
+const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getVenueInfoById(1800803167)
+    .then((res) => {
+      setVenueItems(res);
+      setIsLoading(false);
+    })
+  }, [venueItems]);
+
+  function average(array) {
+    let total = 0;
+    let count = 0;
+
+    array.forEach(function(item, index) {
+        total += item;
+        count++;
+    });
+
+    let final = Math.round(total / count)
+    
+    if (final === 5) {
+      return "⭐️⭐️⭐️⭐️⭐️"
+    } else if (final === 4) {
+      return "⭐️⭐️⭐️⭐️★"
+    } else if (final === 3) {
+    return "⭐️⭐️⭐️★★"
+    } else if (final === 2) {
+    return "⭐️⭐️★★★"
+    } else if (final === 1) {
+    return "⭐️★★★★"
+    } 
+}
+
+  return isLoading ? (
+    <h1>Loading...</h1>
+  ) : (
     <Modal show={show} onHide={onClose} centered size='lg'>
       <ModalHeader closeButton>
-        <ModalTitle>Modal heading</ModalTitle>
+        <ModalTitle>{venueItems.name}</ModalTitle>
       </ModalHeader>
       <ModalBody>
-        <h2>Venue Name</h2>
+        <h2>{venueItems.name}</h2>
         <h3>Address: 99 Street Name, City Name</h3>
-        <p>Wheelchair access: Yes</p>
-        <p>Average accessibility rating (Out of 5): ⭐️⭐️⭐️</p>
+        <p>{"Wheelchair access: " + venueItems.wheelchair}</p>
+        <p>{"Access Description: " + venueItems.wheelchairDesc}{" "}<button>Click to change</button></p>
+        <p>Average accessibility rating (Out of 5): {average(venueItems.accessibility_ratings)}</p>
         <hr></hr>
         <p>
-          <strong>Comments:</strong>
+          <strong>Comments about accessibility:</strong>
         </p>
         <ul>
-          <li key='c1'>
-            Comment 1: This is a comment about the acessibility of Venue name
-            <button>👍 Confirm (x)</button>
+        {venueItems.comments.map((comments) => {
+          return (
+            <>
+            <li key={comments._id}>
+              {comments.body}<br></br>
+                 Author: {comments.author}{" "}|{" "}
+                  Posted: {moment(comments.commentDate).format(
+                              "MMM Do YY"
+                            )}<br></br>
+                <button>👍 Confirmed: ({comments.total_confirmed_votes})</button>
           </li>
-          <li key='c2'>
-            Comment 2: This is a comment about the acessibility of Venue name
-            <button>👍 Confirm (x)</button>
-          </li>
-          <li key='c3'>
-            Comment 3: This is a comment about the acessibility of Venue name
-            <button>👍 Confirm (x)</button>
-          </li>
-          <li key='c4'>
-            Comment 4: This is a comment about the acessibility of Venue name
-            <button>👍 Confirm (x)</button>
-          </li>
-          <li key='c5'>
-            Comment 5: This is a comment about the acessibility of Venue name
-            <button>👍 Confirm (x)</button>
-          </li>
+          <br></br>
+          </>
+          )
+        })}
         </ul>
         <hr></hr>
         <p>
-          <b>Leave a comment:</b>
+          <b>Please leave a comment on how accessible this venue was: </b>
         </p>
-        <form>
-          <input type='text'></input>
-          <button>Submit</button>
-        </form>
+        <CreateNewComment id={1800803167} />
       </ModalBody>
       <ModalFooter>
-        <Button variant='secondary' onClick={onClose}>
+        <Button variant='primary' onClick={onClose}>
           Close
         </Button>
-        <Button variant='primary' onClick={onClose}>
+        {/* <Button variant='primary' onClick={onClose}>
           Save Changes
-        </Button>
+        </Button> */}
       </ModalFooter>
     </Modal>
   );
