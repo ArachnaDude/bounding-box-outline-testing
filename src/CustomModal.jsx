@@ -11,17 +11,24 @@ import CreateNewComment from "./components/CreateNewComment.js";
 import LoadingSpin from "./components/LoadingSpin.js";
 import ConfirmButton from "./components/ConfirmButton.js";
 
-const CustomModal = ({ show, onClose }) => {
+const CustomModal = ({ show, onClose, id }) => {
 const [venueItems, setVenueItems] = useState();
 const [isLoading, setIsLoading] = useState(true);
 
+const setId = (id) => {
+const splitId = id.split("/");
+return splitId[1];
+}
+
+console.log(setId(id), "id")
+
   useEffect(() => {
-    getVenueInfoById(1800803167)
+   getVenueInfoById(setId(id))
     .then((res) => {
       setVenueItems(res);
       setIsLoading(false);
-    })
-  }, [venueItems]);
+    });
+  }, [venueItems, id]);
 
   function average(array) {
     let total = 0;
@@ -57,8 +64,8 @@ const [isLoading, setIsLoading] = useState(true);
         <ModalTitle>{venueItems.name}</ModalTitle>
       </ModalHeader>
       <ModalBody>
-        <h2>{venueItems.name}</h2>
-        <h3>Address: 99 Street Name, City Name</h3>
+        <h2>{venueItems.name} ({venueItems._id})</h2>
+        <h3>Have an address here?</h3>
         <p>{"Wheelchair access: " + venueItems.wheelchair}</p>
         <p>{"Access Description: " + venueItems.wheelchairDesc}{" "}<button>Click to change</button></p>
         <p>Average accessibility rating (Out of 5): {average(venueItems.accessibility_ratings)}</p>
@@ -87,12 +94,12 @@ const [isLoading, setIsLoading] = useState(true);
         <p>
           <b>Please leave a comment on how accessible this venue was: </b>
         </p>
-        <CreateNewComment id={1800803167} />
+        <CreateNewComment id={setId(id)} />
       </ModalBody>
       <ModalFooter>
       <Button variant="primary" onClick={onClose}>
       Close
-      </Button>;
+      </Button>
       </ModalFooter>
     </Modal>
   );

@@ -6,7 +6,8 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 
 const NewCluster = ({ data }) => {
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => setShow(false)
+  
 
   const clusterIcon = (cluster) => {
     let markers = cluster.getChildCount();
@@ -70,7 +71,7 @@ const NewCluster = ({ data }) => {
                 <button className='popup-button' onClick={() => setShow(true)}>
                   More Info
                 </button>
-                <CustomModal show={show} onClose={handleClose} />
+                <CustomModal show={show} onClose={handleClose} id={point.properties.placeId} />
               </Popup>
             </Marker>
           </div>
