@@ -57,8 +57,6 @@ const NewCluster = ({ data }) => {
             },
           };
 
-          console.log(pos);
-
           return <></>;
         } else {
           pos.push(...point.geometry.coordinates.reverse());

@@ -68,8 +68,6 @@ const Cluster = ({ data, setShow }) => {
     options: { radius: 75, maxZoom: 17 },
   });
 
-  console.log(clusters.length);
-
   return (
     <>
       {clusters.map((cluster) => {
