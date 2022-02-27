@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postCommentToVenueById } from "../utils.js/be-api.js";
+import { postCommentToVenueById } from "../utils/be-api.js";
 
 const CreateNewComment = ({ id, setComments }) => {
   const [newComment, setNewComment] = useState("");

@@ -6,7 +6,7 @@ import ModalBody from "react-bootstrap/ModalBody";
 import ModalFooter from "react-bootstrap/ModalFooter";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
-import {getVenueInfoById} from "./utils.js/be-api.js";
+import {getVenueInfoById} from "./utils/be-api.js";
 import CreateNewComment from "./components/CreateNewComment.js";
 
 const CustomModal = ({ show, onClose }) => {
