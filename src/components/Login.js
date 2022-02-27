@@ -51,7 +51,7 @@ const Login = () => {
         For Demo purposes - Please log in as: <strong>joe</strong>
       </p>
       <form className="Login__form" onSubmit={handleSubmit}>
-        <label for="Login__textbox">
+        <label htmlFor="Login__textbox">
           <input
             type="text"
             name="Login__textbox"

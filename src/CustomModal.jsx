@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import moment from "moment";
 import {getVenueInfoById} from "./utils/be-api.js";
 import CreateNewComment from "./components/CreateNewComment.js";
+import LoadingSpin from "./components/LoadingSpin.js";
 
 const CustomModal = ({ show, onClose }) => {
 const [venueItems, setVenueItems] = useState();
@@ -46,7 +47,7 @@ const [isLoading, setIsLoading] = useState(true);
 }
 
   return isLoading ? (
-    <h1>Loading...</h1>
+    <LoadingSpin />
   ) : (
     <Modal show={show} onHide={onClose} centered size='lg'>
       <ModalHeader closeButton>

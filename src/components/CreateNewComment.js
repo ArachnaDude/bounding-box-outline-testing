@@ -32,7 +32,7 @@ const CreateNewComment = ({ id, setComments }) => {
     <>
       <div className="commentBox" onSubmit={handleSubmit}>
         <form>
-          <label for="commentBox"></label>
+          <label htmlFor="commentBox"></label>
           <input
             type="text"
             id="commentBox"
