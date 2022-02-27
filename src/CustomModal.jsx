@@ -9,6 +9,7 @@ import moment from "moment";
 import {getVenueInfoById} from "./utils/be-api.js";
 import CreateNewComment from "./components/CreateNewComment.js";
 import LoadingSpin from "./components/LoadingSpin.js";
+import ConfirmButton from "./components/ConfirmButton.js";
 
 const CustomModal = ({ show, onClose }) => {
 const [venueItems, setVenueItems] = useState();
@@ -43,6 +44,8 @@ const [isLoading, setIsLoading] = useState(true);
     return "⭐️⭐️★★★"
     } else if (final === 1) {
     return "⭐️★★★★"
+    } else if (final === 0) {
+      return "★★★★★"
     } 
 }
 
@@ -73,7 +76,7 @@ const [isLoading, setIsLoading] = useState(true);
                   Posted: {moment(comments.commentDate).format(
                               "MMM Do YY"
                             )}<br></br>
-                <button>👍 Confirmed: ({comments.total_confirmed_votes})</button>
+                <ConfirmButton total_confirmed_votes={comments.total_confirmed_votes} id={venueItems._Id} />
           </li>
           <br></br>
           </>
@@ -87,12 +90,9 @@ const [isLoading, setIsLoading] = useState(true);
         <CreateNewComment id={1800803167} />
       </ModalBody>
       <ModalFooter>
-        <Button variant='primary' onClick={onClose}>
-          Close
-        </Button>
-        {/* <Button variant='primary' onClick={onClose}>
-          Save Changes
-        </Button> */}
+      <Button variant="primary" onClick={onClose}>
+      Close
+      </Button>;
       </ModalFooter>
     </Modal>
   );
